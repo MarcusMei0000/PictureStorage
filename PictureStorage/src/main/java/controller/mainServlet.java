@@ -7,6 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import repository.ArtistRepository;
+import repository.ConnectionFactory;
 import service.ArtistService;
 
 import java.io.IOException;
@@ -22,12 +24,11 @@ public class mainServlet extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/random.jsp");
 
             //беда в ломбоке
-            req.setAttribute("friends", artists.stream().map(Artist::toString).toArray());
+            req.setAttribute("friends", artists.stream().map(x -> x.toString()).toArray());
             requestDispatcher.forward(req, resp);
-
-        } catch (ServletException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
-        }catch (SQLException e) {
+        } catch (ServletException e) {
             throw new RuntimeException(e);
         }
     }
