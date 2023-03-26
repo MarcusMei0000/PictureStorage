@@ -1,4 +1,4 @@
-package controller.picture;
+package controller.artist;
 
 public class AddController {
 }

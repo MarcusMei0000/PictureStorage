@@ -1,6 +1,6 @@
 package repository;
 
-import entity.Artist;
+import entity.Picture;
 import lombok.AllArgsConstructor;
 
 import java.sql.Connection;
@@ -12,24 +12,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
-public class ArtistRepository {
+public class PictureRepository {
     private static String SELECT_BY_ID_QUERY =
-            "SELECT id_artist, last_name FROM artist WHERE id_artist = ?;";
+            "SELECT id_picture, name FROM picture WHERE picture_id = ?;";
     private static String SELECT_ALL_QUERY =
-            "SELECT id_artist, last_name FROM artist;";
+            "SELECT id_picture, name FROM picture;";
     private static String INSERT_PICTURE =
-            "INSERT INTO picture (last_name) VALUES (?);";
+            "INSERT INTO picture (name) VALUES (?);";
 
     private ConnectionFactory connectionFactory;
 
-    public Artist get(Long id) throws SQLException {
+    public Picture get(Long id) throws SQLException {
         try (Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return toArtistEntity(resultSet);
+                return toPictureEntity(resultSet);
             }
             statement.close();
 
@@ -37,34 +37,34 @@ public class ArtistRepository {
         }
     }
 
-    public Collection<Artist> getAll() throws SQLException {
+    public Collection<Picture> getAll() throws SQLException {
         try (Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
-            Set<Artist> artistSet = new HashSet<>();
+            Set<Picture> pictureSet = new HashSet<>();
             while (resultSet.next()) {
-                artistSet.add(toArtistEntity(resultSet));
+                pictureSet.add(toPictureEntity(resultSet));
             }
             statement.close();
 
-            return artistSet;
+            return pictureSet;
         }
     }
 
-    public void add(Artist artist) throws SQLException {
+    public void add(Picture picture) throws SQLException {
         try (Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(INSERT_PICTURE);
-            statement.setString(1, artist.getFirstName());
+            statement.setString(1, picture.getName());
 
             statement.executeQuery();
             statement.close();
         }
     }
 
-    private Artist toArtistEntity(ResultSet resultSet) throws SQLException {
-        return Artist.builder()
-                .idArtist(resultSet.getLong("id_artist"))
-                .firstName(resultSet.getString("last_name"))
+    private Picture toPictureEntity(ResultSet resultSet) throws SQLException {
+        return Picture.builder()
+                .idPicture(resultSet.getLong("picture_id"))
+                .name(resultSet.getString("name"))
                 .build();
     }
 }

@@ -14,11 +14,11 @@ import java.util.Set;
 @AllArgsConstructor
 public class ArtistRepository {
     private static String SELECT_BY_ID_QUERY =
-            "SELECT id_artist, last_name FROM artist WHERE id_artist = ?;";
+            "SELECT id_artist, name FROM artist WHERE artist_id = ?;";
     private static String SELECT_ALL_QUERY =
-            "SELECT id_artist, last_name FROM artist;";
+            "SELECT id_artist, name FROM artist;";
     private static String INSERT_PICTURE =
-            "INSERT INTO picture (last_name) VALUES (?);";
+            "INSERT INTO picture (first_name) VALUES (?);";
 
     private ConnectionFactory connectionFactory;
 
@@ -64,7 +64,7 @@ public class ArtistRepository {
     private Artist toArtistEntity(ResultSet resultSet) throws SQLException {
         return Artist.builder()
                 .idArtist(resultSet.getLong("id_artist"))
-                .firstName(resultSet.getString("last_name"))
+                .firstName(resultSet.getString("name"))
                 .build();
     }
 }

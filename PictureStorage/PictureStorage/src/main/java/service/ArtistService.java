@@ -3,14 +3,12 @@ package service;
 import entity.Artist;
 import lombok.RequiredArgsConstructor;
 import repository.ArtistRepository;
-import repository.ConnectionFactory;
-
 import java.sql.SQLException;
 import java.util.Collection;
 
 @RequiredArgsConstructor
 public class ArtistService {
-    private final ArtistRepository artistRepository = new ArtistRepository(new ConnectionFactory());
+    private final ArtistRepository artistRepository;
     public Artist getById(Long id) throws SQLException {
         return artistRepository.get(id);
     }

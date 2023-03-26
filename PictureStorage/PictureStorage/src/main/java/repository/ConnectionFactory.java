@@ -13,12 +13,12 @@ import java.util.logging.Logger;
 
 public class ConnectionFactory {
     private static final Logger LOGGER = Logger.getLogger(ConnectionFactory.class.getName());
-    private static final String JAVA_COMP_ENV_JDBC_DB = "java:/comp/env/jdbc/PictureStorage";
+    private static final String JAVA_COMP_ENV_JDBC_MY_LOCAL_DB = "java:/comp/env/jdbc/MyLocalDB";
 
     public Connection getConnection() throws ConnectionException{
         try {
             Context context = new InitialContext();
-            DataSource dataSource = (DataSource) context.lookup(JAVA_COMP_ENV_JDBC_DB);
+            DataSource dataSource = (DataSource) context.lookup(JAVA_COMP_ENV_JDBC_MY_LOCAL_DB);
             return dataSource.getConnection();
         } catch (SQLException | NamingException e) {
             LOGGER.log(Level.WARNING, "Error while getting connection", e);

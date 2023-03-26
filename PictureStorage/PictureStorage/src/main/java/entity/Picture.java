@@ -8,6 +8,7 @@ import java.time.LocalDate;
 public class Picture {
     private long idPicture;
     private String name;
+    private String country;
     private LocalDate dateOfPainting;
     private long idArtist;
 }

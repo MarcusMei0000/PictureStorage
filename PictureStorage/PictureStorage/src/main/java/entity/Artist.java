@@ -12,5 +12,7 @@ public class Artist {
     private String firstName;
     private String middleName;
     private String patronymicName;
+    private String shortName;
     private String country;
+    private LocalDate dateOfPainting;
 }
