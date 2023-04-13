@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class PictureRepository {
     private static String SELECT_BY_ID_QUERY =
-            "SELECT id_picture, name FROM picture WHERE picture_id = ?;";
+            "SELECT id_picture, name FROM picture WHERE id_picture = ?;";
     private static String SELECT_ALL_QUERY =
             "SELECT id_picture, name FROM picture;";
     private static String INSERT_PICTURE =
@@ -63,7 +63,7 @@ public class PictureRepository {
 
     private Picture toPictureEntity(ResultSet resultSet) throws SQLException {
         return Picture.builder()
-                .idPicture(resultSet.getLong("picture_id"))
+                .idPicture(resultSet.getLong("id_picture"))
                 .name(resultSet.getString("name"))
                 .build();
     }

@@ -2,12 +2,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    Найди свой путь
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+<form method="get" action="${pageContext.request.contextPath}/artist/main">
+    <input type="submit" value="Художники">
+</form>
+
+<form method="get" action="${pageContext.request.contextPath}/picture/main">
+    <input type="submit" value="Картины">
+</form>
 </body>
 </html>

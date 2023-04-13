@@ -13,21 +13,20 @@ import service.PictureService;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/picture/select")
+@WebServlet("/artist/select")
 public class SelectController extends HttpServlet {
-    private final PictureService pictureService = new PictureService(new PictureRepository(new ConnectionFactory()));
+    private final PictureService pictureService = new PictureService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String selectedId = req.getParameter("id");
-        Long id = Long.valueOf(selectedId);
+        Long id = Long.valueOf(req.getParameter("id"));
         try{
             Picture picture = pictureService.getById(id);
             req.setAttribute("pictureId", picture.getIdPicture());
             req.setAttribute("pictureName", picture.getName());
 
-            req.getRequestDispatcher("/WEB-INF/picture/select.jsp").forward(req, resp);
-        } catch (SQLException | ServletException e) {
+          //  req.getRequestDispatcher("/WEB-INF/picture/select.jsp").forward(req, resp);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

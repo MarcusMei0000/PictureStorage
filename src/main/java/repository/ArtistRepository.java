@@ -18,7 +18,7 @@ public class ArtistRepository {
     private static String SELECT_ALL_QUERY =
             "SELECT id_artist, last_name FROM artist;";
     private static String INSERT_PICTURE =
-            "INSERT INTO picture (last_name) VALUES (?);";
+            "INSERT INTO artist (last_name) VALUES (?);";
 
     private ConnectionFactory connectionFactory;
 
@@ -64,7 +64,7 @@ public class ArtistRepository {
     private Artist toArtistEntity(ResultSet resultSet) throws SQLException {
         return Artist.builder()
                 .idArtist(resultSet.getLong("id_artist"))
-                .firstName(resultSet.getString("last_name"))
+                .lastName(resultSet.getString("last_name"))
                 .build();
     }
 }
