@@ -19,11 +19,11 @@ public class SelectController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Long id = Long.valueOf(req.getParameter("pictureId"));
+        Long id = Long.valueOf(req.getParameter("idPicture"));
         try {
             Picture picture = pictureService.getById(id);
-            req.setAttribute("pictureId", picture.getIdPicture());
-            req.setAttribute("pictureName", picture.getName());
+            req.setAttribute("idPicture", picture.getIdPicture());
+            req.setAttribute("name", picture.getName());
 
        //     req.getRequestDispatcher("/WEB-INF/picture/select.jsp").forward(req, resp);
         } catch (SQLException e) {

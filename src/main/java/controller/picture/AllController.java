@@ -1,5 +1,6 @@
 package controller.picture;
 
+import entity.Artist;
 import entity.Picture;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,13 +20,13 @@ public class AllController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Collection<Picture> artistCollection = pictureService.getAll();
-            req.setAttribute("pictures", artistCollection);
+
+            Collection<Picture> pictures = pictureService.getAll();
+            req.setAttribute("pictures", pictures.stream().map(x -> x.toStringAttributes()).toArray());
             req.getRequestDispatcher("/WEB-INF/picture/all.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
 

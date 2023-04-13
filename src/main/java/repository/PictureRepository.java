@@ -56,7 +56,7 @@ public class PictureRepository {
             PreparedStatement statement = connection.prepareStatement(INSERT_PICTURE);
             statement.setString(1, picture.getName());
 
-            statement.executeQuery();
+            statement.executeUpdate();
             statement.close();
         }
     }

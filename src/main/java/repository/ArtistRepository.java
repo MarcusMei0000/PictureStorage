@@ -18,7 +18,7 @@ public class ArtistRepository {
     private static String SELECT_ALL_QUERY =
             "SELECT id_artist, last_name FROM artist;";
     private static String INSERT_PICTURE =
-            "INSERT INTO artist (last_name) VALUES (?);";
+            "INSERT INTO artist (last_name, first_name, country) VALUES (?,?,?);";
 
     private ConnectionFactory connectionFactory;
 
@@ -54,9 +54,10 @@ public class ArtistRepository {
     public void add(Artist artist) throws SQLException {
         try (Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(INSERT_PICTURE);
-            statement.setString(1, artist.getFirstName());
-
-            statement.executeQuery();
+            statement.setString(1, artist.getLastName());
+            statement.setString(2, artist.getFirstName());
+            statement.setString(3, artist.getCountry());
+            statement.executeUpdate();
             statement.close();
         }
     }

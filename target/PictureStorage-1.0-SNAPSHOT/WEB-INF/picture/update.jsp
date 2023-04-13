@@ -15,7 +15,7 @@
     <form method="get">
         Номер записи
         <input type="number" value="">
-        Новое имя (first_name)
+        Новое имя (name)
         <input type="text" value="">
         <input type = "submit" value="Изменить">
     </form>

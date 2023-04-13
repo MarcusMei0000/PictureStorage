@@ -10,4 +10,8 @@ public class Picture {
     private String name;
     private LocalDate dateOfPainting;
     private long idArtist;
+
+    public String toStringAttributes() {
+        return idPicture + " "  + name + " " + dateOfPainting + " " + idArtist;
+    }
 }

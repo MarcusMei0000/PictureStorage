@@ -12,9 +12,11 @@
     Добавление художника
 </head>
 <body>
-    <form method="post">
+    <form method="post" >
         Новое имя (last_name)
-        <input type="text" value="">
+        <input type="text" value="" name="last_name"/><br>
+        <input type="text" value="" name="first_name"/><br>
+        <input type="text" value="" name="country"/><br>
     <input type = "submit" value="Добавить">
     </form>
 </body>
