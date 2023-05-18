@@ -12,11 +12,11 @@
     Изменить картину
 </head>
 <body>
-    <form method="get">
+    <form method="post">
         Номер записи
-        <input type="number" value="">
+        <input type="number" name="id_picture" value="">
         Новое имя (name)
-        <input type="text" value="">
+        <input type="text" name="name" value="">
         <input type = "submit" value="Изменить">
     </form>
 </body>

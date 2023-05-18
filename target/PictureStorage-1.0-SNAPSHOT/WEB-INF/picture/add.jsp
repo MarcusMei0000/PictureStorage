@@ -14,7 +14,7 @@
 <body>
 <form method="post">
     Новое имя (name)
-    <input type="text" value="">
+    <input type="text" name ="name" value="">
     <input type = "submit" value="Добавить">
 </form>
 </body>

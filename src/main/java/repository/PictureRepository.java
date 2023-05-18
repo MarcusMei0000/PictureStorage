@@ -74,6 +74,15 @@ public class PictureRepository {
             statement.close();
         }
     }
+    public void update(Picture picture) throws SQLException {
+        try (Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(UPDATE_PICTURE);
+            statement.setLong(2, picture.getIdPicture());
+            statement.setString(1, picture.getName());
+            statement.executeUpdate();
+            statement.close();
+        }
+    }
 
     private Picture toPictureEntity(ResultSet resultSet) throws SQLException {
         return Picture.builder()

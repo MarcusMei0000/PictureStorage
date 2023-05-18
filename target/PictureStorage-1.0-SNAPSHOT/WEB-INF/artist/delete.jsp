@@ -14,7 +14,7 @@
 <body>
     <form method="post">
         Номер записи
-        <input type="number" value="">
+        <input type="number" name="id_artist" value="">
         <input type = "submit" value="Удалить">
     </form>
 </body>

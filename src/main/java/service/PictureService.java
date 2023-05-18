@@ -23,6 +23,10 @@ public class PictureService {
         pictureRepository.add(picture);
     }
 
+    public void update(Picture picture) throws SQLException {
+        pictureRepository.update(picture);
+    }
+
     public void delete(long id) throws SQLException {
         pictureRepository.delete(id);
     }

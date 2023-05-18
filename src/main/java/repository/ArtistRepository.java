@@ -70,7 +70,8 @@ public class ArtistRepository {
     public void update(Artist artist) throws SQLException {
         try (Connection connection = connectionFactory.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(UPDATE_ARTIST);
-            statement.setString(2, artist.getFirstName());
+            statement.setLong(2, artist.getIdArtist());
+            statement.setString(1, artist.getFirstName());
             statement.executeUpdate();
             statement.close();
         }
