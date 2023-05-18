@@ -13,8 +13,6 @@ import java.sql.SQLException;
 
 @WebServlet("/picture/add")
 public class AddController extends HttpServlet {
-    private static final long serialVersionID = 1L;
-
     private final PictureService pictureService = new PictureService();
 
     @Override
@@ -26,10 +24,9 @@ public class AddController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             pictureService.add(Picture.builder()
-                    .idPicture(Long.parseLong(req.getParameter("id_picture")))
                     .name(req.getParameter("name"))
                     .build());
-            req.getRequestDispatcher("/WEB-INF/picture/add.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/picture/main.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

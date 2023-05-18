@@ -10,7 +10,9 @@ import java.util.Collection;
 
 @RequiredArgsConstructor
 public class ArtistService {
-    private final ArtistRepository artistRepository = new ArtistRepository(new ConnectionFactory());
+
+    private static final String JAVA_COMP_ENV_JDBC_DB = "java:/comp/env/jdbc/PictureStorage";
+    private final ArtistRepository artistRepository = new ArtistRepository(new ConnectionFactory(JAVA_COMP_ENV_JDBC_DB));
     public Artist getById(Long id) throws SQLException {
         return artistRepository.get(id);
     }
@@ -21,6 +23,13 @@ public class ArtistService {
 
     public void add(Artist artist) throws SQLException {
         artistRepository.add(artist);
+    }
+
+    public void update(Artist artist) throws SQLException {
+        artistRepository.update(artist);
+    }
+    public void delete(long id) throws SQLException {
+        artistRepository.delete(id);
     }
 }
 

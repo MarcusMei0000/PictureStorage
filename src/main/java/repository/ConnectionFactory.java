@@ -12,8 +12,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConnectionFactory {
+
     private static final Logger LOGGER = Logger.getLogger(ConnectionFactory.class.getName());
     private static final String JAVA_COMP_ENV_JDBC_DB = "java:/comp/env/jdbc/PictureStorage";
+
+    public ConnectionFactory(String jdbcConnectionName)
+    {
+    }
 
     public Connection getConnection() throws ConnectionException{
         try {

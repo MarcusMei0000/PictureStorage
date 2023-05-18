@@ -1,7 +1,7 @@
 package entity;
+
 import lombok.Builder;
 import lombok.Data;
-import java.time.LocalDate;
 
 @Data
 @Builder
@@ -12,11 +12,14 @@ public class Artist {
     private String firstName;
     private String middleName;
     private String patronymicName;
-    private String country;
+    private long idCountry;
 
     public String toStringAttributes() {
         if (middleName != null)
-            return idArtist + " "  + firstName + " " + middleName + " " + lastName + " " + country;
-        return idArtist + " " + lastName + " " + firstName + " " + patronymicName + " " + country;
+            return idArtist + " "  + firstName + " " + middleName + " " + lastName + " ";
+        if (patronymicName != null)
+            return idArtist + " " + lastName + " " + firstName + " " + patronymicName + " ";
+
+        return idArtist + " " + lastName;
     }
 }

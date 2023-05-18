@@ -15,8 +15,8 @@
     <form method="post" >
         Новое имя (last_name)
         <input type="text" value="" name="last_name"/><br>
+        Новое имя (first_name)
         <input type="text" value="" name="first_name"/><br>
-        <input type="text" value="" name="country"/><br>
     <input type = "submit" value="Добавить">
     </form>
 </body>

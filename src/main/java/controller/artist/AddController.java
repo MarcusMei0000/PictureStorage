@@ -26,7 +26,6 @@ public class AddController extends HttpServlet {
             artistService.add(Artist.builder()
                     .lastName(req.getParameter("last_name"))
                     .firstName(req.getParameter("first_name"))
-                    .country(req.getParameter("country"))
                     .build());
             req.getRequestDispatcher("/WEB-INF/artist/main.jsp").forward(req, resp);
         } catch (SQLException e) {

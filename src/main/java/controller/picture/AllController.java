@@ -1,6 +1,5 @@
 package controller.picture;
 
-import entity.Artist;
 import entity.Picture;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,7 +21,7 @@ public class AllController extends HttpServlet {
         try {
 
             Collection<Picture> pictures = pictureService.getAll();
-            req.setAttribute("pictures", pictures.stream().map(x -> x.toStringAttributes()).toArray());
+            req.setAttribute("pictures", pictures.stream().map(Picture::toStringAttributes).toArray());
             req.getRequestDispatcher("/WEB-INF/picture/all.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new RuntimeException(e);

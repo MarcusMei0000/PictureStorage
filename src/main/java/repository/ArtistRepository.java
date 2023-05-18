@@ -17,8 +17,13 @@ public class ArtistRepository {
             "SELECT id_artist, last_name FROM artist WHERE id_artist = ?;";
     private static String SELECT_ALL_QUERY =
             "SELECT id_artist, last_name FROM artist;";
-    private static String INSERT_PICTURE =
-            "INSERT INTO artist (last_name, first_name, country) VALUES (?,?,?);";
+    private static String INSERT_ARTIST =
+            "INSERT INTO artist (last_name, first_name) VALUES (?,?);";
+
+    private static String UPDATE_ARTIST =
+            "UPDATE artist SET first_name = ? WHERE id_artist = ?;";
+    private static String DELETE_ARTIST =
+            "DELETE FROM artist WHERE id_artist = ?;";
 
     private ConnectionFactory connectionFactory;
 
@@ -42,6 +47,7 @@ public class ArtistRepository {
             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
             Set<Artist> artistSet = new HashSet<>();
+
             while (resultSet.next()) {
                 artistSet.add(toArtistEntity(resultSet));
             }
@@ -53,10 +59,27 @@ public class ArtistRepository {
 
     public void add(Artist artist) throws SQLException {
         try (Connection connection = connectionFactory.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(INSERT_PICTURE);
+            PreparedStatement statement = connection.prepareStatement(INSERT_ARTIST);
             statement.setString(1, artist.getLastName());
             statement.setString(2, artist.getFirstName());
-            statement.setString(3, artist.getCountry());
+            statement.executeUpdate();
+            statement.close();
+        }
+    }
+
+    public void update(Artist artist) throws SQLException {
+        try (Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(UPDATE_ARTIST);
+            statement.setString(2, artist.getFirstName());
+            statement.executeUpdate();
+            statement.close();
+        }
+    }
+
+    public void delete(long id) throws SQLException {
+        try (Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(DELETE_ARTIST);
+            statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();
         }

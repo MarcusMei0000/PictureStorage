@@ -20,6 +20,11 @@ public class PictureRepository {
     private static String INSERT_PICTURE =
             "INSERT INTO picture (name) VALUES (?);";
 
+
+    private static String UPDATE_PICTURE =
+            "UPDATE picture SET name = ? WHERE id_picture = ?;";
+    private static String DELETE_PICTURE =
+            "DELETE FROM picture WHERE id_picture = ?;";
     private ConnectionFactory connectionFactory;
 
     public Picture get(Long id) throws SQLException {
@@ -56,6 +61,15 @@ public class PictureRepository {
             PreparedStatement statement = connection.prepareStatement(INSERT_PICTURE);
             statement.setString(1, picture.getName());
 
+            statement.executeUpdate();
+            statement.close();
+        }
+    }
+
+    public void delete(long id) throws SQLException {
+        try (Connection connection = connectionFactory.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(DELETE_PICTURE);
+            statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();
         }
