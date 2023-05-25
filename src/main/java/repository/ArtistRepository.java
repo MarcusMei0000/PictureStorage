@@ -13,19 +13,21 @@ import java.util.Set;
 
 @AllArgsConstructor
 public class ArtistRepository {
-    private static String SELECT_BY_ID_QUERY =
+    private static final String SELECT_BY_ID_QUERY =
             "SELECT id_artist, last_name FROM artist WHERE id_artist = ?;";
-    private static String SELECT_ALL_QUERY =
+    private static final String SELECT_ALL_QUERY =
             "SELECT id_artist, last_name FROM artist;";
-    private static String INSERT_ARTIST =
+    private static final String INSERT_ARTIST =
             "INSERT INTO artist (last_name, first_name) VALUES (?,?);";
 
-    private static String UPDATE_ARTIST =
+    private static final String UPDATE_ARTIST =
             "UPDATE artist SET first_name = ? WHERE id_artist = ?;";
-    private static String DELETE_ARTIST =
+    private static final String DELETE_ARTIST =
             "DELETE FROM artist WHERE id_artist = ?;";
 
     private ConnectionFactory connectionFactory;
+
+
 
     public Artist get(Long id) throws SQLException {
         try (Connection connection = connectionFactory.getConnection()) {

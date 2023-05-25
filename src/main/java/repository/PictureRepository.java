@@ -13,17 +13,15 @@ import java.util.Set;
 
 @AllArgsConstructor
 public class PictureRepository {
-    private static String SELECT_BY_ID_QUERY =
+    private static final String SELECT_BY_ID_QUERY =
             "SELECT id_picture, name FROM picture WHERE id_picture = ?;";
-    private static String SELECT_ALL_QUERY =
+    private static final String SELECT_ALL_QUERY =
             "SELECT id_picture, name FROM picture;";
-    private static String INSERT_PICTURE =
+    private static final String INSERT_PICTURE =
             "INSERT INTO picture (name) VALUES (?);";
-
-
-    private static String UPDATE_PICTURE =
+    private static final String UPDATE_PICTURE =
             "UPDATE picture SET name = ? WHERE id_picture = ?;";
-    private static String DELETE_PICTURE =
+    private static final String DELETE_PICTURE =
             "DELETE FROM picture WHERE id_picture = ?;";
     private ConnectionFactory connectionFactory;
 

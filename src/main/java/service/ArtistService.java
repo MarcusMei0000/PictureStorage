@@ -1,6 +1,8 @@
 package service;
 
 import entity.Artist;
+import exception.InvalidNameException;
+import exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import repository.ArtistRepository;
 import repository.ConnectionFactory;
@@ -25,10 +27,19 @@ public class ArtistService {
         artistRepository.add(artist);
     }
 
-    public void update(Artist artist) throws SQLException {
+    public void update(Artist artist) throws SQLException, InvalidNameException, NotFoundException {
+        if (artistRepository.get(artist.getIdArtist()) == null) {
+            throw new NotFoundException("Художника с id = " + artist.getIdArtist() + " не существует");
+        }
+        if (artist.getFirstName().equals("")) {
+            throw new InvalidNameException("Имя не может быть пустым");
+        }
         artistRepository.update(artist);
     }
-    public void delete(long id) throws SQLException {
+    public void delete(long  id) throws SQLException, NotFoundException {
+        if (artistRepository.get(id) == null) {
+            throw new NotFoundException("Художника с id = " + id + " не существует");
+        }
         artistRepository.delete(id);
     }
 }

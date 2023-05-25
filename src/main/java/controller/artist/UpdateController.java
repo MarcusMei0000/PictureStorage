@@ -1,6 +1,8 @@
 package controller.artist;
 
 import entity.Artist;
+import exception.InvalidNameException;
+import exception.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,9 +12,12 @@ import service.ArtistService;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet("/artist/update")
 public class UpdateController extends HttpServlet {
+    private final static Logger LOGGER = Logger.getLogger(UpdateController.class.getName());
     private final ArtistService artistService = new ArtistService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,6 +33,13 @@ public class UpdateController extends HttpServlet {
                     .build());
             req.getRequestDispatcher("/WEB-INF/artist/main.jsp").forward(req, resp);
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Database error", e);
+            throw new RuntimeException(e);
+        } catch (InvalidNameException e) {
+            LOGGER.log(Level.SEVERE, "Invalid artist name", e);
+            throw new RuntimeException(e);
+        } catch (NotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Artist is not founded", e);
             throw new RuntimeException(e);
         }
     }

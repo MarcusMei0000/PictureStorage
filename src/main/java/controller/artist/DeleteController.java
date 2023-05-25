@@ -1,5 +1,6 @@
 package controller.artist;
 
+import exception.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,9 +10,12 @@ import service.ArtistService;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet("/artist/delete")
 public class DeleteController extends HttpServlet {
+    private final static Logger LOGGER = Logger.getLogger(DeleteController.class.getName());
     private final ArtistService artistService = new ArtistService();
 
     @Override
@@ -24,6 +28,10 @@ public class DeleteController extends HttpServlet {
             artistService.delete(Long.parseLong(req.getParameter("id_artist")));
             req.getRequestDispatcher("/WEB-INF/artist/main.jsp").forward(req, resp);
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Database error", e);
+            throw new RuntimeException(e);
+        } catch (NotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Artist is not founded", e);
             throw new RuntimeException(e);
         }
     }

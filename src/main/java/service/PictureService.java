@@ -1,6 +1,8 @@
 package service;
 
 import entity.Picture;
+import exception.InvalidNameException;
+import exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import repository.ConnectionFactory;
 import repository.PictureRepository;
@@ -23,11 +25,20 @@ public class PictureService {
         pictureRepository.add(picture);
     }
 
-    public void update(Picture picture) throws SQLException {
+    public void update(Picture picture) throws SQLException, NotFoundException, InvalidNameException {
+        if (pictureRepository.get(picture.getIdPicture()) == null) {
+            throw new NotFoundException("Картина с id = " + picture.getIdPicture() + " не существует");
+        }
+        if (picture.getName().equals("")) {
+            throw new InvalidNameException("Имя не может быть пустым");
+        }
         pictureRepository.update(picture);
     }
 
-    public void delete(long id) throws SQLException {
+    public void delete(long id) throws SQLException, NotFoundException {
+        if (pictureRepository.get(id) == null) {
+            throw new NotFoundException("Картина с id = " + id + " не существует");
+        }
         pictureRepository.delete(id);
     }
 }

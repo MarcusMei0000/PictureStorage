@@ -10,9 +10,12 @@ import service.ArtistService;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet("/artist/add")
 public class AddController extends HttpServlet {
+    private final static Logger LOGGER = Logger.getLogger(AddController.class.getName());
     private final ArtistService artistService = new ArtistService();
 
     @Override
@@ -29,6 +32,7 @@ public class AddController extends HttpServlet {
                     .build());
             req.getRequestDispatcher("/WEB-INF/artist/main.jsp").forward(req, resp);
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Database error", e);
             throw new RuntimeException(e);
         }
     }

@@ -12,6 +12,6 @@ public class Picture {
     private long idArtist;
 
     public String toStringAttributes() {
-        return idPicture + " "  + name + " " + dateOfPainting + " " + idArtist;
+        return idPicture + " "  + name;
     }
 }
