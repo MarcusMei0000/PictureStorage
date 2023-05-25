@@ -27,11 +27,12 @@ public class DeleteController extends HttpServlet {
         try {
             artistService.delete(Long.parseLong(req.getParameter("id_artist")));
             req.getRequestDispatcher("/WEB-INF/artist/main.jsp").forward(req, resp);
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Database error", e);
-            throw new RuntimeException(e);
         } catch (NotFoundException e) {
             LOGGER.log(Level.SEVERE, "Artist is not founded", e);
+            resp.sendRedirect(req.getContextPath() + "/error?errorMessage=Artist is not founded");
+            //throw new RuntimeException(e);
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Database error", e);
             throw new RuntimeException(e);
         }
     }

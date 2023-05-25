@@ -32,14 +32,16 @@ public class UpdateController extends HttpServlet {
                     .firstName(req.getParameter("first_name"))
                     .build());
             req.getRequestDispatcher("/WEB-INF/artist/main.jsp").forward(req, resp);
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Database error", e);
-            throw new RuntimeException(e);
-        } catch (InvalidNameException e) {
-            LOGGER.log(Level.SEVERE, "Invalid artist name", e);
-            throw new RuntimeException(e);
         } catch (NotFoundException e) {
             LOGGER.log(Level.SEVERE, "Artist is not founded", e);
+            resp.sendRedirect(req.getContextPath() + "/error?errorMessage=Artist is not founded");
+            //throw new RuntimeException(e);
+        } catch (InvalidNameException e) {
+            LOGGER.log(Level.SEVERE, "Invalid artist name", e);
+            resp.sendRedirect(req.getContextPath() + "/error?errorMessage=Invalid artist name");
+            //throw new RuntimeException(e);
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Database error", e);
             throw new RuntimeException(e);
         }
     }
