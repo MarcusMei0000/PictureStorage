@@ -6,6 +6,7 @@ import exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import repository.ArtistRepository;
 import repository.ConnectionFactory;
+import repository.ConnectionFactoryImplimentation;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -14,7 +15,7 @@ import java.util.Collection;
 public class ArtistService {
 
     private static final String JAVA_COMP_ENV_JDBC_DB = "java:/comp/env/jdbc/PictureStorage";
-    private final ArtistRepository artistRepository = new ArtistRepository(new ConnectionFactory(JAVA_COMP_ENV_JDBC_DB));
+    private final ArtistRepository artistRepository = new ArtistRepository(new ConnectionFactoryImplimentation());
     public Artist getById(Long id) throws SQLException {
         return artistRepository.get(id);
     }

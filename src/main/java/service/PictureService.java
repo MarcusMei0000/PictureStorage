@@ -5,6 +5,7 @@ import exception.InvalidNameException;
 import exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import repository.ConnectionFactory;
+import repository.ConnectionFactoryImplimentation;
 import repository.PictureRepository;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -12,7 +13,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class PictureService {
     private static final String JAVA_COMP_ENV_JDBC_DB = "java:/comp/env/jdbc/PictureStorage";
-    private final PictureRepository pictureRepository = new PictureRepository(new ConnectionFactory(JAVA_COMP_ENV_JDBC_DB));
+    private final PictureRepository pictureRepository = new PictureRepository(new ConnectionFactoryImplimentation());
     public Picture getById(Long id) throws SQLException {
         return pictureRepository.get(id);
     }
