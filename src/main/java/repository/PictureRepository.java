@@ -54,13 +54,20 @@ public class PictureRepository {
         }
     }
 
-    public void add(Picture picture) throws SQLException {
+    public long add(Picture picture) throws SQLException {
         try (Connection connection = connectionFactory.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(INSERT_PICTURE);
+            PreparedStatement statement = connection.prepareStatement(INSERT_PICTURE, new String[] {"id_picture"});
             statement.setString(1, picture.getName());
-
             statement.executeUpdate();
+
+            long id = -1;
+            ResultSet gk = statement.getGeneratedKeys();
+            if(gk.next()) {
+                id = gk.getLong("id_picture");
+            }
             statement.close();
+
+            return id;
         }
     }
 

@@ -1,6 +1,17 @@
 package controller.logic;
 
+import exception.AlreadyExistsException;
+import exception.InvalidNameException;
+import exception.NotFoundException;
+import org.junit.jupiter.api.Test;
+import service.ArtistService;
+import controller.TestData;
+
+import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.*;
 public class ArtistServiceTests {
+
 /*
     private final ArtistService artistService = new ArtistService();
     @Test
@@ -22,7 +33,6 @@ public class ArtistServiceTests {
             fail("GetByArtistId is correct but game with id = " + artistId + " not exists");
         } catch (SQLException e) {
             fail(e);
-        } catch (NotFoundException e) {
         }
     }
 
@@ -31,7 +41,7 @@ public class ArtistServiceTests {
         try {
             var expected = TestsData.TOPIC_TO_SAVE;
             var actual = artistService.save(expected);
-            Utils.checkEquals(expected, actual);
+            repository.Utils.checkEquals(expected, actual);
         } catch (InvalidNameException | AlreadyExistsException | SQLException e) {
             fail(e);
         }

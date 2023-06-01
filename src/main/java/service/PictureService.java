@@ -20,8 +20,8 @@ public class PictureService {
         return pictureRepository.getAll();
     }
 
-    public void add(Picture picture) throws SQLException {
-        pictureRepository.add(picture);
+    public long add(Picture picture) throws SQLException {
+        return pictureRepository.add(picture);
     }
 
     public void update(Picture picture) throws SQLException, NotFoundException, InvalidNameException {

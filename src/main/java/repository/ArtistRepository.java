@@ -56,13 +56,22 @@ public class ArtistRepository {
         }
     }
 
-    public void add(Artist artist) throws SQLException {
+    public long add(Artist artist) throws SQLException {
         try (Connection connection = connectionFactory.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(INSERT_ARTIST);
+            PreparedStatement statement = connection.prepareStatement(INSERT_ARTIST, new String[] {"id_artist"});
             statement.setString(1, artist.getLastName());
             statement.setString(2, artist.getFirstName());
             statement.executeUpdate();
+
+            long id = -1;
+            ResultSet gk = statement.getGeneratedKeys();
+            if(gk.next()) {
+                id = gk.getLong("id_artist");
+            }
+
             statement.close();
+
+            return id;
         }
     }
 

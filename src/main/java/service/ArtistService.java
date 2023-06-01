@@ -21,8 +21,8 @@ public class ArtistService {
         return artistRepository.getAll();
     }
 
-    public void add(Artist artist) throws SQLException {
-        artistRepository.add(artist);
+    public long add(Artist artist) throws SQLException {
+        return artistRepository.add(artist);
     }
 
     public void update(Artist artist) throws SQLException, InvalidNameException, NotFoundException {

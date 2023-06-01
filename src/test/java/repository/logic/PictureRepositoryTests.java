@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import repository.ConnectionFactoryByManager;
 import repository.PictureRepository;
 import repository.TestData;
+import repository.Utils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,12 +33,12 @@ public class PictureRepositoryTests {
     public void getAllTest() {
         try {
             var expected = new ArrayList<>(List.of(TestData.MORNING, TestData.EVERGREEN, TestData.FOREST));
-            expected.sort(Comparator.comparingLong(Picture::getIdPicture));
+            expected.sort(Comparator.comparing(Picture::getName));
 
             var actual = new ArrayList<>(pictureRepository.getAll());
-            actual.sort(Comparator.comparingLong(Picture::getIdPicture));
+            actual.sort(Comparator.comparing(Picture::getName));
 
-            assertEquals(expected, actual);
+            Utils.checkEqualsListsPicture(expected, actual);
         } catch (SQLException e) {
             fail(e);
         }
@@ -57,7 +58,6 @@ public class PictureRepositoryTests {
         }
     }
 
-    //
     @Test
     public void deleteTest() {
         try {
@@ -70,14 +70,13 @@ public class PictureRepositoryTests {
         }
     }
 
-    //GOTO: как проверить создание
     @Test
     public void createTest() {
         try {
             Picture expected = TestData.MORNING;
-            pictureRepository.add(expected);
-            Picture actual = pictureRepository.get(TestData.MORNING.getIdPicture());
-            assertEquals(expected, actual);
+            long id = pictureRepository.add(expected);
+            Picture actual = pictureRepository.get(id);
+            Utils.checkEqualsNames(expected, actual);
         } catch (SQLException e) {
             fail(e);
         }
