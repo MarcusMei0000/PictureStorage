@@ -15,14 +15,14 @@ import java.util.logging.Logger;
 @WebServlet("/artist/select")
 public class SelectController extends HttpServlet {
     private final static Logger LOGGER = Logger.getLogger(SelectController.class.getName());
-    private final ArtistService pictureService = new ArtistService();
+    private final ArtistService artistService = new ArtistService();
 
     @Override
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Long id = Long.valueOf(req.getParameter("idArtist"));
         try{
-            Artist artist = pictureService.getById(id);
+            Artist artist = artistService.getById(id);
             req.setAttribute("idArtist", artist.getIdArtist());
             req.setAttribute("lastName", artist.getLastName());
 

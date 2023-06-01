@@ -5,6 +5,7 @@ import exception.InvalidNameException;
 import exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import repository.ArtistRepository;
+import repository.ConnectionFactory;
 import repository.ConnectionFactoryByDataSource;
 
 import java.sql.SQLException;
@@ -12,7 +13,15 @@ import java.util.Collection;
 
 @RequiredArgsConstructor
 public class ArtistService {
-    private final ArtistRepository artistRepository = new ArtistRepository(new ConnectionFactoryByDataSource());
+    private final ArtistRepository artistRepository;
+
+    public ArtistService() {
+        artistRepository = new ArtistRepository(new ConnectionFactoryByDataSource());
+    }
+    public ArtistService(ConnectionFactory factory) {
+        artistRepository = new ArtistRepository(factory);
+    }
+
     public Artist getById(Long id) throws SQLException {
         return artistRepository.get(id);
     }
@@ -21,7 +30,10 @@ public class ArtistService {
         return artistRepository.getAll();
     }
 
-    public long add(Artist artist) throws SQLException {
+    public long add(Artist artist) throws SQLException, InvalidNameException {
+        if (artist.getLastName().equals("")) {
+            throw new InvalidNameException("Имя не может быть пустым");
+        }
         return artistRepository.add(artist);
     }
 

@@ -4,14 +4,23 @@ import entity.Picture;
 import exception.InvalidNameException;
 import exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import repository.ConnectionFactoryByDataSource;
+import repository.ConnectionFactory;
+import repository.ConnectionFactoryByManager;
 import repository.PictureRepository;
 import java.sql.SQLException;
 import java.util.Collection;
 
 @RequiredArgsConstructor
 public class PictureService {
-    private final PictureRepository pictureRepository = new PictureRepository(new ConnectionFactoryByDataSource());
+    private final PictureRepository pictureRepository;
+
+    public PictureService() {
+        pictureRepository = new PictureRepository(new ConnectionFactoryByManager());
+    }
+    public  PictureService(ConnectionFactory factory) {
+        pictureRepository = new PictureRepository(factory);
+    }
+
     public Picture getById(Long id) throws SQLException {
         return pictureRepository.get(id);
     }
@@ -20,7 +29,10 @@ public class PictureService {
         return pictureRepository.getAll();
     }
 
-    public long add(Picture picture) throws SQLException {
+    public long add(Picture picture) throws SQLException, InvalidNameException {
+        if (picture.getName().equals("")) {
+            throw new InvalidNameException("Имя не может быть пустым");
+        }
         return pictureRepository.add(picture);
     }
 

@@ -1,9 +1,9 @@
 package controller.logic;
 
-import exception.AlreadyExistsException;
 import exception.InvalidNameException;
 import exception.NotFoundException;
 import org.junit.jupiter.api.Test;
+import repository.ConnectionFactoryByManager;
 import service.ArtistService;
 import controller.TestData;
 
@@ -12,37 +12,37 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 public class ArtistServiceTests {
 
-/*
-    private final ArtistService artistService = new ArtistService();
+    private final ArtistService artistService = new ArtistService(new ConnectionFactoryByManager());
     @Test
     public void getByExistIdTest() {
         try {
-            long artistId = TestData.ARTIST_VALID.getIdArtist();
-            artistService.getById(artistId);
-            fail("GetByArtistId is correct but game with id = " + artistId + " not exists");
-        } catch (SQLException e) {
-            fail(e);
-        } catch (NotFoundException e) {
-        }
-    }
-    @Test
-    public void getByNotExistIdTest() {
-        try {
-            long artistId = TestData.ARTIST_INVALID.getIdArtist();
-            artistService.getById(artistId);
-            fail("GetByArtistId is correct but game with id = " + artistId + " not exists");
+            var expected = TestData.ARTIST_VALID;
+            var actual = artistService.getById(TestData.ARTIST_VALID.getIdArtist());
+            assertEquals(expected, actual);
         } catch (SQLException e) {
             fail(e);
         }
     }
 
     @Test
-    public void saveTest() {
+    public void getByNotExistIdTest() {
         try {
-            var expected = TestsData.TOPIC_TO_SAVE;
-            var actual = artistService.save(expected);
+            long artistId = TestData.ARTIST_INVALID.getIdArtist();
+            var actual = artistService.getById(artistId);
+            assertNull(actual);
+        } catch (SQLException e) {
+            fail(e);
+        }
+    }
+
+    @Test
+    public void createTest() {
+        try {
+            var expected = TestData.ARTIST_VALID;
+            long id = artistService.add(expected);
+            var actual = artistService.getById(id);
             repository.Utils.checkEquals(expected, actual);
-        } catch (InvalidNameException | AlreadyExistsException | SQLException e) {
+        } catch (SQLException | InvalidNameException e) {
             fail(e);
         }
     }
@@ -50,36 +50,24 @@ public class ArtistServiceTests {
     @Test
     public void saveInvalidNameTest() {
         try {
-            var expected = TestsData.TOPIC_INVALID;
-            artistService.save(expected);
-            fail("Save is correct but topic have empty name");
-        } catch (AlreadyExistsException | SQLException e) {
-            fail(e);
+            var expected = TestData.ARTIST_INVALID;
+            artistService.add(expected);
         } catch (InvalidNameException e) {
-        }
-    }
-
-    @Test
-    public void saveAlreadyExistsTest() {
-        try {
-            var expected = TestsData.TOPIC_WITH_APOSTROPHE;
-            artistService.save(expected);
-            fail("Save is correct but topic with name = " + expected.getName() + " already exists");
-        } catch (InvalidNameException | SQLException e) {
+            fail("Save is correct, but name is empty");
+        } catch (SQLException e) {
             fail(e);
-        } catch (AlreadyExistsException e) {
         }
     }
 
     @Test
     public void deleteNotExists() {
         try {
-            int id = TestsData.GAME_INVALID.getId();
+            long id = TestData.ARTIST_INVALID.getIdArtist();
             artistService.delete(id);
+        } catch (NotFoundException e) {
             fail("delete is correct, but this entity not exists");
         } catch (SQLException e) {
             fail(e);
-        } catch (NotFoundException e) {
         }
-    }*/
+    }
 }

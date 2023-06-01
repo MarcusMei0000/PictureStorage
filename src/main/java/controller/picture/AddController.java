@@ -1,6 +1,7 @@
 package controller.picture;
 
 import entity.Picture;
+import exception.InvalidNameException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -33,6 +34,9 @@ public class AddController extends HttpServlet {
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Database error", e);
             throw new RuntimeException(e);
+        } catch (InvalidNameException e) {
+            resp.sendRedirect(req.getContextPath() + "/error?errorMessage=Invalid Picture Name");
+            //throw new RuntimeException(e);
         }
     }
 }

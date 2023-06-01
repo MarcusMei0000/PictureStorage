@@ -5,10 +5,8 @@ import entity.Picture;
 
 public class TestData {
     public static Artist ARTIST_INVALID = new Artist(-1, "");
-    public static Artist SHISHKIN = new Artist(1, "Шишкин");
-    public static Artist MONE = new Artist(2, "Моне");
-    public static Artist MANE = new Artist(3, "Мане");
-    public static Artist DALI = new Artist(4, "Дали");
+    public static Artist ARTIST_VALID = new Artist(1, "Шишкин");
+    public static Artist ARTIST_WITH_APOSTROPHE = new Artist(2, "L'artist");
 
     public static Picture MORNING = new Picture(1,"Утро в сосновом лесу");
     public static Picture EVERGREEN = new Picture(2,"Одинокая сосна");
