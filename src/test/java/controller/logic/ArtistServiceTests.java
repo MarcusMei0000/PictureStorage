@@ -2,6 +2,7 @@ package controller.logic;
 
 import exception.InvalidNameException;
 import exception.NotFoundException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import repository.ConnectionFactoryByManager;
 import service.ArtistService;
@@ -10,9 +11,11 @@ import controller.TestData;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 public class ArtistServiceTests {
 
     private final ArtistService artistService = new ArtistService(new ConnectionFactoryByManager());
+
     @Test
     public void getByExistIdTest() {
         try {
@@ -49,25 +52,13 @@ public class ArtistServiceTests {
 
     @Test
     public void saveInvalidNameTest() {
-        try {
-            var expected = TestData.ARTIST_INVALID;
-            artistService.add(expected);
-        } catch (InvalidNameException e) {
-            fail("Save is correct, but name is empty");
-        } catch (SQLException e) {
-            fail(e);
-        }
+        Assertions.assertThrows(InvalidNameException.class,
+                () -> artistService.add(TestData.ARTIST_INVALID));
     }
 
     @Test
     public void deleteNotExists() {
-        try {
-            long id = TestData.ARTIST_INVALID.getIdArtist();
-            artistService.delete(id);
-        } catch (NotFoundException e) {
-            fail("delete is correct, but this entity not exists");
-        } catch (SQLException e) {
-            fail(e);
-        }
+        Assertions.assertThrows(NotFoundException.class,
+                () -> artistService.delete(TestData.ARTIST_INVALID.getIdArtist()));
     }
 }

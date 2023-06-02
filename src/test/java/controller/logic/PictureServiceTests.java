@@ -3,6 +3,7 @@ package controller.logic;
 import controller.TestData;
 import exception.InvalidNameException;
 import exception.NotFoundException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import repository.ConnectionFactoryByManager;
 import service.PictureService;
@@ -50,26 +51,13 @@ public class PictureServiceTests {
 
     @Test
     public void saveInvalidNameTest() {
-        try {
-            var expected = TestData.PICTURE_INVALID;
-            pictureService.add(expected);
-        } catch (InvalidNameException e) {
-            fail("Save is correct, but name is empty");
-        } catch (SQLException e) {
-            fail(e);
-        }
+       Assertions.assertThrows(InvalidNameException.class,
+               () -> pictureService.add(TestData.PICTURE_INVALID));
     }
 
     @Test
     public void deleteNotExists() {
-        try {
-            long id = TestData.PICTURE_INVALID.getIdPicture();
-            pictureService.delete(id);
-        } catch (NotFoundException e) {
-            fail("delete is correct, but this entity not exists");
-        } catch (SQLException e) {
-            fail(e);
-        }
+        Assertions.assertThrows(NotFoundException.class,
+                () -> pictureService.delete(TestData.PICTURE_INVALID.getIdPicture()));
     }
-
 }
